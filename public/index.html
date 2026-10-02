@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Monitor de Redes · Agencia</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f5f6f8;--card:#fff;--tx:#14171f;--mu:#667085;--bd:#e4e7ec;--ac:#4f46e5;--st:#f59e0b;--ig:#d6249f;--tt:#0e9aa7;--fb:#1877f2;--ok:#12b76a;--bad:#f04438;--no:#d0d5dd}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1115;--card:#181b22;--tx:#eceef2;--mu:#98a2b3;--bd:#2a2e38;--ac:#818cf8;--no:#333845}}
+:root[data-theme="dark"]{--bg:#0f1115;--card:#181b22;--tx:#eceef2;--mu:#98a2b3;--bd:#2a2e38;--ac:#818cf8;--no:#333845}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1150px;margin:auto;padding:16px}
+h1{font-size:20px;margin:0}h2{font-size:14px;margin:0 0 10px}.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
+.f{display:flex;gap:8px;flex-wrap:wrap}
+select,input,button{font:inherit;padding:7px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx)}
+input[type=number]{width:64px;padding:5px}input[type=checkbox]{width:18px;height:18px}
+button{background:var(--ac);color:#fff;border:0;cursor:pointer}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px}
+.k b{display:block;font-size:26px}.k span,.mu{color:var(--mu);font-size:12px}
+.sc{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:820px}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--bd);vertical-align:top}th{color:var(--mu);font-weight:500;font-size:12px}
+.p{padding:2px 8px;border-radius:99px;color:#fff;font-size:11px}.Instagram{background:var(--ig)}.TikTok{background:var(--tt)}.Facebook{background:var(--fb)}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.wa{color:var(--st)}
+.al{padding:6px 10px;border-left:3px solid;margin-bottom:6px;background:var(--bg);border-radius:0 8px 8px 0}.al.bad{border-color:var(--bad);color:var(--tx)}.al.wa{border-color:var(--st);color:var(--tx)}
+.hr{display:flex;align-items:center;margin-bottom:6px;min-width:max-content}.hl{width:170px;font-size:12px;position:sticky;left:0;background:var(--card);padding-right:6px;z-index:1}
+.cl{width:22px;margin-right:3px;display:flex;flex-direction:column;gap:2px}.cl i{height:9px;border-radius:2px;background:var(--no);font-style:normal;font-size:8px;line-height:9px;text-align:center;color:#fff}
+.cl i.a{background:var(--ac)}.cl i.s{background:var(--st)}.dl{width:22px;margin-right:3px;font-size:9px;color:var(--mu);text-align:center}
+.lg{display:flex;gap:14px;font-size:12px;color:var(--mu);margin-top:6px;flex-wrap:wrap}.lg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:760px){.g2{grid-template-columns:1fr}}
+</style></head><body><main>
+<div class="top"><h1>📊 Monitor de Redes · Agencia</h1>
+<div class="f"><span class="mu" id="sync" style="align-self:center"></span><select id="pf"><option value="">Todas las redes</option><option>Instagram</option><option>TikTok</option><option>Facebook</option></select>
+<select id="rg"><option value="7">7 días</option><option value="14" selected>14 días</option><option value="30">30 días</option></select></div></div>
+<div class="kp" id="kp"></div>
+<div class="c"><h2>🚨 Pendientes ahora</h2><div id="al"></div></div>
+<div class="c"><h2>Calendario de cumplimiento</h2><div class="sc" id="hm"></div>
+<div class="lg"><span><i style="background:var(--ac)"></i>Publicó en feed (post/reel/carrusel)</span><span><i style="background:var(--st)"></i>Subió historias (número = cantidad)</span><span><i style="background:var(--no)"></i>Nada ese día</span></div></div>
+<div class="c"><h2>Detalle por cuenta</h2><div class="sc"><table><thead><tr><th>Cuenta</th><th>Regla</th><th>Última publicación</th><th>Historias hoy</th><th>DMs sin responder</th><th>Comentarios nuevos</th><th>Campaña activa</th><th>Cumplimiento</th></tr></thead><tbody id="tb"></tbody></table></div>
+<p class="mu">Todo lo que se registre o edite aquí lo ven al instante todas las personas con acceso. Las cuentas con ID de Meta se actualizan solas cada 30 min; DMs, comentarios y campaña se editan a mano por ahora.</p></div>
+<div class="g2">
+<div class="c"><h2>Registrar actividad</h2><div class="f"><select id="ac"></select><select id="ty"><option value="post">Post</option><option value="reel">Reel</option><option value="carousel">Carrusel</option><option value="video">Video</option><option value="story">Historia</option></select><input type="datetime-local" id="dt"><button id="add">Agregar</button></div></div>
+<div class="c"><h2>Agregar cuenta</h2><div class="f"><input id="nc" placeholder="Cliente"><select id="np"><option>Instagram</option><option>TikTok</option><option>Facebook</option></select><input id="nh" placeholder="@usuario"><input id="nx" placeholder="ID en Meta (opcional)"></div>
+<div class="f" style="margin-top:8px"><label class="mu">Publica cada <input type="number" id="ne" value="2" min="1"> días</label><label class="mu">Historias/día <input type="number" id="ns" value="1" min="0"></label><button id="na">Agregar</button></div></div></div>
+<script>
+const $=id=>document.getElementById(id),DAY=864e5,K='monitor_agencia_v2',sod=t=>new Date(t).setHours(0,0,0,0);
+let S={A:[],E:{}},arm=null;
+const key=(a,d)=>a+'_'+d,E=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const api=(p,o)=>fetch('/api/'+p,{...o,headers:{'content-type':'application/json'}}).then(r=>{if(!r.ok)throw 0;return r.json()});
+async function load(){try{const j=await api('state');
+S.A=j.accounts.map(a=>({id:a.id,c:a.client,p:a.platform,h:a.handle,pe:a.pe,sg:a.sg,dm:a.dm,cm:a.cm,ad:a.ad}));S.E={};
+j.days.forEach(x=>{const [y,m,d]=x.day.split('-'),ms=new Date(+y,+m-1,+d).getTime();S.E[key(x.acc,ms)]={a:x.acc,d:ms,p:x.p,s:x.s,lp:x.lp}});
+$('sync').textContent='● En vivo · '+new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});render()}catch(e){$('sync').textContent='⚠ Sin conexión con el servidor'}}
+const fd=t=>new Date(t).toLocaleString('es',{weekday:'short',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+function render(){const pf=$('pf').value,R=+$('rg').value,now=Date.now(),T=sod(now),acc=S.A.filter(a=>!pf||a.p==pf).sort((x,y)=>(x.c+x.p).localeCompare(y.c+y.p));
+let AL=[],okN=0,rows='',hm='';
+const cnt=(id,d0,st)=>{const e=S.E[key(id,sod(d0+12*36e5))];return e?(st?e.s:e.p)||0:0};
+acc.forEach(a=>{const lp=Math.max(0,...Object.values(S.E).filter(e=>e.a==a.id).map(e=>e.lp||0)),ds=lp?Math.round((T-sod(lp))/DAY):99,sT=cnt(a.id,T,true);
+let stt,cls;if(ds==0){stt='Publicó hoy';cls='ok'}else if(ds<a.pe){stt='Al día';cls='ok'}else if(ds==a.pe){stt='Toca publicar hoy';cls='wa'}else{stt='Atrasada '+(ds-a.pe)+' d';cls='bad'}
+const nm=`${E(a.c)} · ${a.p}`;
+if(cls=='bad')AL.push(['bad',`<b>${nm}</b>: lleva ${ds} días sin publicar (regla: cada ${a.pe}).`]);
+if(cls=='wa')AL.push(['wa',`<b>${nm}</b>: hoy toca publicar y aún no hay nada.`]);
+if(a.sg>0&&sT<a.sg)AL.push([sT==0?'bad':'wa',`<b>${nm}</b>: ${sT} de ${a.sg} historias hoy.`]);
+if(a.dm>0)AL.push(['wa',`<b>${nm}</b>: ${a.dm} DM sin responder.`]);
+if(a.cm>0)AL.push(['wa',`<b>${nm}</b>: ${a.cm} comentarios nuevos.`]);
+if(cls!='bad'&&(a.sg==0||sT>=a.sg))okN++;
+let fdays=0,sdays=0,cells='';
+for(let i=0;i<R;i++){const d0=T-(R-1-i)*DAY,p=cnt(a.id,d0,false),s=cnt(a.id,d0,true);if(p)fdays++;if(s)sdays++;cells+=`<div class="cl" title="${new Date(d0).toLocaleDateString('es')}: ${p} feed, ${s} historias"><i class="${p?'a':''}"></i><i class="${s?'s':''}">${s||''}</i></div>`}
+const exp=Math.ceil(R/a.pe);
+hm+=`<div class="hr"><div class="hl"><b>${E(a.c)}</b><br><span class="mu">${a.p} ${E(a.h)}</span></div>${cells}</div>`;
+rows+=`<tr><td><button data-del="${E(a.id)}" style="float:right;background:none;color:var(--mu);padding:0 4px" title="Eliminar cuenta">${arm==a.id?'¿Seguro?':'✕'}</button><span class="p ${E(a.p)}">${a.p}</span> ${E(a.h)}<br><span class="mu">${E(a.c)}</span></td><td>Feed cada ${a.pe} d<br><span class="mu">${a.sg} historias/día</span></td><td>${lp?fd(lp):'—'}<br><span class="${cls}">● ${stt}</span></td><td class="${a.sg&&sT<a.sg?(sT?'wa':'bad'):'ok'}"><b>${sT}</b> / ${a.sg}</td><td><input type="number" min="0" value="${a.dm}" data-i="${a.id}" data-k="dm"></td><td><input type="number" min="0" value="${a.cm}" data-i="${a.id}" data-k="cm"></td><td><input type="checkbox" ${a.ad?'checked':''} data-i="${a.id}" data-k="ad"> ${a.ad?'<span class="ok">Activa</span>':'<span class="mu">No</span>'}</td><td>Feed: ${fdays} días con pub. / ${R-fdays} sin<br><span class="mu">Meta ${exp} · Historias ${sdays}/${R} días</span></td></tr>`});
+AL.sort((x,y)=>(x[0]=='bad'?0:1)-(y[0]=='bad'?0:1));
+$('kp').innerHTML=[[`${okN}/${acc.length}`,'Cuentas en regla hoy'],[AL.length,'Alertas'],[acc.reduce((n,a)=>n+a.dm,0),'DMs sin responder'],[acc.reduce((n,a)=>n+a.cm,0),'Comentarios nuevos'],[acc.filter(a=>a.ad).length,'Campañas activas']].map(k=>`<div class="c k" style="margin:0"><b>${k[0]}</b><span>${k[1]}</span></div>`).join('');
+$('al').innerHTML=!acc.length?'<span class="mu">Aún no hay cuentas. Agrega una abajo o carga el ejemplo.</span>':AL.map(x=>`<div class="al ${x[0]}">${x[1]}</div>`).join('')||'<span class="ok">Todo en orden ✅</span>';
+let dl='';for(let i=0;i<R;i++){const d=new Date(T-(R-1-i)*DAY);dl+=`<div class="dl">${d.getDate()}<br>${'DLMMJVS'[d.getDay()]}</div>`}
+$('hm').innerHTML=`<div class="hr"><div class="hl"></div>${dl}</div>`+hm;
+$('tb').innerHTML=rows||'<tr><td colspan=8>Sin cuentas</td></tr>';
+$('ac').innerHTML=S.A.map(a=>`<option value="${a.id}">${E(a.c)} · ${a.p}</option>`).join('')}
+['pf','rg'].forEach(i=>$(i).onchange=render);
+const act=(p,m,b)=>api(p,{method:m,body:JSON.stringify(b)}).then(load).catch(()=>{$('sync').textContent='⚠ No se pudo guardar'});
+$('tb').onchange=e=>{const t=e.target,id=t.dataset.i;if(!id)return;act('account/'+id,'PATCH',{[t.dataset.k]:t.type=='checkbox'?(t.checked?1:0):Math.max(0,+t.value||0)})};
+$('tb').onclick=e=>{const id=e.target.dataset.del;if(!id)return;if(arm!=id){arm=id;render();return}arm=null;act('account/'+id,'DELETE')};
+$('add').onclick=()=>{const v=$('dt').value;if(!$('ac').value)return;act('log','POST',{acc:$('ac').value,type:$('ty').value,ts:v?new Date(v).getTime():Date.now()})};
+$('na').onclick=()=>{const h=$('nh').value.trim();if(!h)return;act('account','POST',{client:$('nc').value.trim()||'Cliente',platform:$('np').value,handle:h,ext_id:$('nx').value.trim(),pe:+$('ne').value||2,sg:+$('ns').value||0});$('nh').value='';$('nx').value=''};
+render();load();setInterval(load,30000);
+</script></main></body></html>
