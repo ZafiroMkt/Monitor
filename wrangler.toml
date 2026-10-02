@@ -1,0 +1,19 @@
+name = "monitor-redes"
+main = "src/worker.js"
+compatibility_date = "2026-09-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "monitor-redes"
+database_id = "1f8f89f7-f154-4a09-b9a5-7baa66842e04"
+
+[triggers]
+crons = ["*/30 * * * *"]   # revisa las redes cada 30 minutos
+
+[vars]
+TZ = "America/Caracas"    # zona horaria de la agencia (define qué es "hoy")
